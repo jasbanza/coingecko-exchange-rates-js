@@ -5,103 +5,54 @@
  *  https://github.com/jasbanza/coingecko-exchange-rates-js/README.md
  */
 
-import {
-  Big
-} from 'lib/big.min.js';
-
-const FOREX = {
-  fetch: async function() {
+const RATES = {
+  get: async function() {
     let ret = {};
     await fetch('https://api.coingecko.com/api/v3/exchange_rates')
       .then(response => response.json())
       .then((data) => {
         ret = data.rates;
       })
-      .catch(e) {
+      .catch((e) => {
         ret = {
           "error": true
         };
-      };
-      return ret;
+      });
+    return ret;
   },
-  exchange: function(base, quote, amount) {
-    var value = Big(0);
-    if (parseFloat(amount) > 0) {
-      // get base/quote data:
-      var rates = getGlobal('exchange_rates');
+  exchange: async function(options = {
+    "from": "usd",
+    "to": "zar",
+    "amount": 0,
+    "rates": null
+  }) {
+    let rates = options.rates;
+    if (!rates) {
+      rates = await this.get();
+    }
+    var ret = {
+      from: {},
+      to: {}
+    };
+    if (parseFloat(options.amount) > 0) {
       try {
-        var rate = Big(rates[quote].value).div(Big(rates[base].value));
-        var decimals = (rates[quote].type == 'crypto') ? 8 : 2;
-        value = rate.times(amount).toFixed(decimals);
+        var rate = Big(rates[options.to].value).div(Big(rates[options.from].value));
+        var decimals = (rates[options.from].type == 'crypto') ? 8 : 2;
+
+        ret.to.amount = rate.times(options.amount).toFixed(decimals);
+        ret.to.ticker = options.to;
+        ret.to.name = rates[options.to].name;
+        ret.to.unit = rates[options.to].unit;
+        ret.to.type = rates[options.to].type;
+
+        ret.from.amount = options.amount
+        ret.from.ticker = options.from;
+        ret.from.name = rates[options.from].name;
+        ret.from.unit = rates[options.from].unit;
+        ret.from.type = rates[options.from].type;
+
       } catch (e) {}
     }
-    return value;
-  },
-  exchange_list: function(base, arr_quotes, amount) {
-    var outputValues = {};
-    var rates = getGlobal('exchange_rates');
-
-    if (parseFloat(amount) > 0) {
-      var quote;
-      for (var i = 0; i < arr_quotes.length; i++) {
-        quote = arr_quotes[i];
-        var value = Big(0);
-        // get base/quote data:
-        try {
-          // get value:
-          var rate = Big(rates[quote].value).div(Big(rates[base].value));
-          var decimals = (rates[quote].type == 'crypto') ? 8 : 2;
-          value = rate.times(amount).toFixed(decimals);
-
-          // prettifying currency format:
-          var pretty = "";
-          switch (rates[quote].type) {
-            case 'fiat':
-              try {
-                pretty = new Intl.NumberFormat('en-US', {
-                  style: 'currency',
-                  currency: quote,
-                }).format(value);
-              } catch {}
-              break;
-            case 'crypto':
-            default:
-              pretty = value + ' ' + rates[quote].unit;
-              break;
-          }
-
-          outputValues[quote] = {
-            value: value,
-            pretty: pretty
-          };
-        } catch (e) {}
-      }
-    }
-    return outputValues;
+    return ret;
   }
 };
-
-function updateExchangeRates() {
-
-  fetch('https://api.coingecko.com/api/v3/exchange_rates')
-    .then(response => response.json())
-    .then((data) => {
-      setGlobal('exchange_rates', data.rates);
-
-      setGlobal('exchange_disclaimer', "Data provided by CoinGecko - Updated every 1 to 10 minutes");
-      setGlobal('exchange_time_updated', formatDateTime(new Date()));
-      // UI:
-      update_tickers();
-      update_marquee();
-    });
-}
-
-function getRate(currency) {
-  var rate = Big(0);
-  try {
-    rate = Big(getGlobal('exchange_rates')[currency].value);
-  } catch (e) {
-
-  }
-  return rate;
-}
