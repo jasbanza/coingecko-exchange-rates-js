@@ -89,7 +89,8 @@ let options = {
 
 // Omitting `options.types` will result in all types being returned.
 
-//`options.rates` is a previously returned `rates` object. Ommitting this will result in the CoinGecko API endpoint being queried.
+// `options.rates` is a previously returned `rates` object. 
+// Ommitting this will result in the CoinGecko API endpoint being queried.
 
 
 console.log(await RATES.list(options)); // returns object of exchange rates
