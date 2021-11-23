@@ -8,7 +8,13 @@ API endpoint: <https://api.coingecko.com/api/v3/exchange_rates>
 
 ## Setup
 
--   Add `coingecko-exchange-rates-js/index.js` as a script src. This will instantiate the `RATES` variable in global scope.
+-   Add the following script tags to your webpage.
+```html
+<script type="text/javascript" src="./coingecko-exchange-rates-js/lib/big.min.js"></script>
+<script type="text/javascript" src="./coingecko-exchange-rates-js/index.js"></script>
+
+```
+This will instantiate the `RATES` variable in global scope.
 
 ## Example usage
 
