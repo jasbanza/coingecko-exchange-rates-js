@@ -8,7 +8,7 @@ API endpoint: <https://api.coingecko.com/api/v3/exchange_rates>
 
 ## Setup
 
--   Add the following script tags to your webpage.
+Add the following script tags to your webpage, and edit the paths according to your directory structure:
 ```html
 <script type="text/javascript" src="./coingecko-exchange-rates-js/lib/big.min.js"></script>
 <script type="text/javascript" src="./coingecko-exchange-rates-js/index.js"></script>
