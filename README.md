@@ -1,7 +1,7 @@
 # coingecko-exchange-rates-js
 Pure JavaScript helper functions for CoinGecko API v3 exchange rates. Makes use of Big.js dependency to ensure accurate conversion.
 
-API endpoint: (https://api.coingecko.com/api/v3/exchange_rates)[https://api.coingecko.com/api/v3/exchange_rates]
+API endpoint: [https://api.coingecko.com/api/v3/exchange_rates](https://api.coingecko.com/api/v3/exchange_rates)
 
 ***You will notice the CoinGecko API endpoint above returns fiat and major crypto tickers with values quoted against a BTC base***
 
