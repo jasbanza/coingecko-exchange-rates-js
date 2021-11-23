@@ -55,18 +55,27 @@ const RATES = {
     }
     return ret;
   },
-  fiat: async function(options = {
+  list: async function(options = {
+    "types": ["fiat", "crypto", "commodity"],
     "rates": null
   }) {
-    let rates = options.rates, ret = {};
+    let rates = options.rates,
+      ret = {};
     // fetch new rates if they aren't sent in options argument
     if (!rates) {
       rates = await this.get();
     }
-    // only get fiat rates
-    for (var rate in rates) {
-      if (rates[rate].type == "fiat") {
-        ret[rate] = rates[rate];
+
+    // check what types are queried:
+    if (!options.types || options.types == [] || options.types.includes("all") || (options.types.includes("fiat") && options.types.includes("crypto") && options.types.includes("commodity"))) {
+      // return all rates
+      ret = rates;
+    } else {
+      // only get rates of specific types
+      for (var rate in rates) {
+        if (options.types.includes(rates[rate].type)) {
+          ret[rate] = rates[rate];
+        }
       }
     }
     return ret;

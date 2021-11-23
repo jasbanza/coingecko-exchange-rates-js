@@ -1,23 +1,25 @@
 # coingecko-exchange-rates-js
+
 Pure JavaScript helper functions for CoinGecko API v3 exchange rates. Makes use of Big.js dependency to ensure accurate conversion.
 
-API endpoint: [https://api.coingecko.com/api/v3/exchange_rates](https://api.coingecko.com/api/v3/exchange_rates)
+API endpoint: <https://api.coingecko.com/api/v3/exchange_rates>
 
-***You will notice the CoinGecko API endpoint above returns fiat and major crypto tickers with values quoted against a BTC base***
+**_You will notice the CoinGecko API endpoint above returns fiat and major crypto tickers with values quoted against a BTC base_**
 
 ## Setup
 
-* Add `coingecko-exchange-rates-js/index.js` as a script src. This will instantiate the `RATES` variable in global scope.
+-   Add `coingecko-exchange-rates-js/index.js` as a script src. This will instantiate the `RATES` variable in global scope.
 
 ## Example usage
 
 ### Getting exchange rates from CoinGecko and doing lookups.
+
 If you plan on only doing a single lookup, use Method 1.
 If your intentions are to do a lot of lookups, use method 2. _This is to ensure the API is only called once, and you won't accidently run into CoinGecko rate limiting._
 
-***NB: All functions are async***
+**_NB: All functions are asynchronous_**
 
-* Method 1 - calling from API each time:
+-   Method 1 - calling from API each time:
 
 ```javascript
 let usd_zar = await RATES.exchange({
@@ -25,9 +27,10 @@ let usd_zar = await RATES.exchange({
   "to": "zar",
   "amount": 1
 });
-```
-`usd_zar` will be:
-```javascript
+
+console.log(usd_zar);
+
+// output will be:
 {
     "from": {
         "amount": 1,
@@ -46,7 +49,7 @@ let usd_zar = await RATES.exchange({
 }
 ```
 
-* Method 2 - get rates once, and use multiple times:
+-   Method 2 - get rates once, and use multiple times:
 
 ```javascript
 var rates = await RATES.get(); // get rates once
@@ -71,11 +74,28 @@ console.log(await RATES.exchange({
 }));
 ```
 
-### Polling the exchange rates list for fiat rates only
+### Polling the exchange rates for specific types
+
+You can also query `RATES.get(options)` with an `options` object.
+
+`options.types` is an `array` which can contain any combination of the following:
 
 ```javascript
-console.log(await RATES.fiat());
+["fiat", "crypto", "commodity", "all"]
+```
 
-// results in a exchange rates javascript object, without crypto pairs, only fiat.
+Omitting `options.types` will result in all types being returned.
 
+`options.rates` is a previously returned `rates` object.
+Ommitting this will result in the CoinGecko API endpoint being queried.
+
+```javascript
+
+var options = {
+      "types": ["fiat", "crypto", "commodity", "all"],
+      "rates": null // use this for persisting data. If you already called rates, you can
+    };
+console.log(await RATES.get(options));
+
+// returns object of exchange rates
 ```
