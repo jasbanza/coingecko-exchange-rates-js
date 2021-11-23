@@ -54,5 +54,21 @@ const RATES = {
       } catch (e) {}
     }
     return ret;
+  },
+  fiat: async function(options = {
+    "rates": null
+  }) {
+    let rates = options.rates, ret = {};
+    // fetch new rates if they aren't sent in options argument
+    if (!rates) {
+      rates = await this.get();
+    }
+    // only get fiat rates
+    for (var rate in rates) {
+      if (rates[rate].type == "fiat") {
+        ret[rate] = rates[rate];
+      }
+    }
+    return ret;
   }
 };
