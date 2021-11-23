@@ -1,13 +1,13 @@
 # coingecko-exchange-rates-js
 JavaScript helper functions for CoinGecko API v3 exchange rates
 
-### Setup
+## Setup
 
 * Add `coingecko-exchange-rates-js/index.js` as a script src. This will instantiate the FOREX variable in global scope.
 
-### Example usage
+## Example usage
 
-#### getting rate from api and exchanging.
+### getting rate from api and exchanging.
 There are 2 ways of using this. If your intentions are to do a lot of exchanging, use method 2. This is to ensure the API is only called once, and you won't accidently run into CoinGecko rate limiting.
 
 ***NB: All functions are async***
