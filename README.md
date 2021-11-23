@@ -76,7 +76,7 @@ console.log(await RATES.exchange({
 
 ### Polling the exchange rates for specific types
 
-You can also query `RATES.get(options)` with an `options` object.
+You can also query `RATES.list(options)` with an `options` object.
 
 `options.types` is an `array` which can contain any combination of the following:
 
@@ -95,7 +95,7 @@ var options = {
       "types": ["fiat", "crypto", "commodity", "all"],
       "rates": null // use this for persisting data. If you already called rates, you can
     };
-console.log(await RATES.get(options));
+console.log(await RATES.list(options));
 
 // returns object of exchange rates
 ```
