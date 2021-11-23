@@ -84,15 +84,16 @@ let options = {
       "rates": null
     };
 
-// `options.types` is an array which can contain any combination of the following:
+/* `options.types` is an array which can contain any combination of the following:
 ["fiat", "crypto", "commodity", "all"]
 
-// Omitting `options.types` will result in all types being returned.
+ Omitting `options.types` will result in all types being returned.
 
-// `options.rates` is a previously returned `rates` object. 
-// Ommitting this will result in the CoinGecko API endpoint being queried.
+ `options.rates` is a previously returned `rates` object.
+ Ommitting this will result in the CoinGecko API endpoint being queried.*/
 
 
-console.log(await RATES.list(options)); // returns object of exchange rates
+console.log(await RATES.list(options));
+// returns object of exchange rates
 
 ```
