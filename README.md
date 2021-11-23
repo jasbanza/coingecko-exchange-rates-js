@@ -78,24 +78,20 @@ console.log(await RATES.exchange({
 
 You can also query `RATES.list(options)` with an `options` object.
 
-`options.types` is an `array` which can contain any combination of the following:
-
 ```javascript
-["fiat", "crypto", "commodity", "all"]
-```
-
-Omitting `options.types` will result in all types being returned.
-
-`options.rates` is a previously returned `rates` object.
-Ommitting this will result in the CoinGecko API endpoint being queried.
-
-```javascript
-
-var options = {
+let options = {
       "types": ["fiat", "crypto", "commodity", "all"],
-      "rates": null // use this for persisting data. If you already called rates, you can
+      "rates": null
     };
-console.log(await RATES.list(options));
 
-// returns object of exchange rates
+// `options.types` is an array which can contain any combination of the following:
+["fiat", "crypto", "commodity", "all"]
+
+// Omitting `options.types` will result in all types being returned.
+
+//`options.rates` is a previously returned `rates` object. Ommitting this will result in the CoinGecko API endpoint being queried.
+
+
+console.log(await RATES.list(options)); // returns object of exchange rates
+
 ```
