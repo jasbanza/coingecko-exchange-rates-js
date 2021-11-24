@@ -1,5 +1,5 @@
 /*
- *  coingecko-forex.js
+ *  coingecko-exchange-rates
  *  JavaScript helper functions for CoinGecko API v3 exchange rates
  *  Copyright (c) 2021 jasbanza
  *  https://github.com/jasbanza/coingecko-exchange-rates-js/README.md
